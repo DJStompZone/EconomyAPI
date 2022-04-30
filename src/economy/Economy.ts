@@ -68,3 +68,13 @@ export class Economy {
     return this.onJoinEvent
   }
 }
+
+const client = new Client({
+  commandsDisabled: true,
+})
+
+const economy = new Economy(client)
+
+export {
+  economy,
+}
