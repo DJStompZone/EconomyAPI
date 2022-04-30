@@ -4,13 +4,13 @@ import { Money } from '../types/Money.js'
 import { OnJoin } from '../listeners/OnJoin.js'
 
 export class Economy {
+  private client: Client
+  private onJoinEvent: OnJoin
 
-    private client: Client;
-
-    constructor(client: Client) {
-        this.client = client;
-        new OnJoin(client).Listen()
-    }
+  public constructor(client: Client) {
+    this.client = client
+    this.onJoinEvent = new OnJoin(this)
+  }
 
   public getMoney(player: Player): number {
     return moneyModal.find({ player: player.getName() }).money
@@ -58,5 +58,13 @@ export class Economy {
 
   public getAll(): Money[] {
     return moneyModal.findAll({})
+  }
+
+  public getClient(): Client {
+    return this.client
+  }
+
+  public getOnJoinEvent(): OnJoin {
+    return this.onJoinEvent
   }
 }
