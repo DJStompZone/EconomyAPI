@@ -1,12 +1,21 @@
-import { client } from 'beapi-core'
+import { Client } from 'beapi-core'
 import { moneyModal } from '../index.js'
+export class OnJoin {
 
-client.on('OnJoin', (player) => {
-  const check = moneyModal.findAll({}).find((x) => x.player = player.getName())
-  if (check) return
+  private client: Client;
 
-  moneyModal.write({
-    player: player.getName(),
-    money: 0,
-  })
-})
+  constructor(client: Client) {
+    this.client = client;
+  }
+  Listen() {
+    this.client.on('OnJoin', (player) => {
+      const check = moneyModal.findAll({}).find((x) => x.player = player.getName())
+      if (check) return
+    
+      moneyModal.write({
+        player: player.getName(),
+        money: 0,
+      })
+    })
+  }
+}

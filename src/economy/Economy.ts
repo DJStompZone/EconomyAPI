@@ -1,8 +1,17 @@
-import { Player } from 'beapi-core'
+import { Player, Client } from 'beapi-core'
 import { moneyModal } from '../index.js'
 import { Money } from '../types/Money.js'
+import { OnJoin } from '../listeners/OnJoin.js'
 
-class Economy {
+export class Economy {
+
+    private client: Client;
+
+    constructor(client: Client) {
+        this.client = client;
+        new OnJoin(client).Listen()
+    }
+
   public getMoney(player: Player): number {
     return moneyModal.find({ player: player.getName() }).money
   }
@@ -51,5 +60,3 @@ class Economy {
     return moneyModal.findAll({})
   }
 }
-
-export const economy = new Economy()
